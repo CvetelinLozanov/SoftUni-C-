@@ -3,33 +3,35 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01. Type Boundaries", "01. Type Boundaries\01. Type Boundaries.csproj", "{1AAB4C46-254A-4ABF-A3AB-0D2DB65E14A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "01. Type Boundaries", "01. Type Boundaries\01. Type Boundaries.csproj", "{1AAB4C46-254A-4ABF-A3AB-0D2DB65E14A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02. Number Checker", "02. Number Checker\02. Number Checker.csproj", "{20B4AE03-1B51-4FFD-BBA0-46403DFB7090}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02. Number Checker", "02. Number Checker\02. Number Checker.csproj", "{20B4AE03-1B51-4FFD-BBA0-46403DFB7090}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03. Water Overflow", "03. Water Overflow\03. Water Overflow.csproj", "{818B1734-97C7-4A65-A2D3-83B3BD088091}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "03. Water Overflow", "03. Water Overflow\03. Water Overflow.csproj", "{818B1734-97C7-4A65-A2D3-83B3BD088091}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04. Tourist Information", "04. Tourist Information\04. Tourist Information.csproj", "{7EE633BA-C86B-4EBF-AF58-D5204555CA2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "04. Tourist Information", "04. Tourist Information\04. Tourist Information.csproj", "{7EE633BA-C86B-4EBF-AF58-D5204555CA2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05. Weather Forecast", "05. Weather Forecast\05. Weather Forecast.csproj", "{6D7F6EA8-C1E5-405C-9E43-AC129C67E687}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "05. Weather Forecast", "05. Weather Forecast\05. Weather Forecast.csproj", "{6D7F6EA8-C1E5-405C-9E43-AC129C67E687}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06. Catch the Thief", "06. Catch the Thief\06. Catch the Thief.csproj", "{7AABE89F-7333-4A93-A213-D91E879615D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "06. Catch the Thief", "06. Catch the Thief\06. Catch the Thief.csproj", "{7AABE89F-7333-4A93-A213-D91E879615D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "07. Sentence the Thief", "07. Sentence the Thief\07. Sentence the Thief.csproj", "{B8A6BDC9-90F9-47D6-A196-503B99E1A677}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "07. Sentence the Thief", "07. Sentence the Thief\07. Sentence the Thief.csproj", "{B8A6BDC9-90F9-47D6-A196-503B99E1A677}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "08. House Builder", "08. House Builder\08. House Builder.csproj", "{B47F3606-AA8D-4855-86FA-B9B2911FE3E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "08. House Builder", "08. House Builder\08. House Builder.csproj", "{B47F3606-AA8D-4855-86FA-B9B2911FE3E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "09. Make a Word", "09. Make a Word\09. Make a Word.csproj", "{0AEDEA4C-6F6F-4F4F-B840-F9EDDDA43DC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "09. Make a Word", "09. Make a Word\09. Make a Word.csproj", "{0AEDEA4C-6F6F-4F4F-B840-F9EDDDA43DC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10. Sum of Chars", "10. Sum of Chars\10. Sum of Chars.csproj", "{1DE4A098-85C2-4C88-A75C-31BBF42E0BEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "10. Sum of Chars", "10. Sum of Chars\10. Sum of Chars.csproj", "{1DE4A098-85C2-4C88-A75C-31BBF42E0BEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11. String Concatenation", "11. String Concatenation\11. String Concatenation.csproj", "{FE4A37D9-59F0-4348-8F6A-CB798B15BA2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "11. String Concatenation", "11. String Concatenation\11. String Concatenation.csproj", "{FE4A37D9-59F0-4348-8F6A-CB798B15BA2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "12. Beer Kegs", "12. Beer Kegs\12. Beer Kegs.csproj", "{95004247-BD22-4256-B825-8B72A90108D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "12. Beer Kegs", "12. Beer Kegs\12. Beer Kegs.csproj", "{95004247-BD22-4256-B825-8B72A90108D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "13. Decrypting Message", "13. Decrypting Message\13. Decrypting Message.csproj", "{53D7A1BA-8DDA-46D0-ADDA-A11BEB9BBD36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "13. Decrypting Message", "13. Decrypting Message\13. Decrypting Message.csproj", "{53D7A1BA-8DDA-46D0-ADDA-A11BEB9BBD36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "14. Boat Simulator", "14. Boat Simulator\14. Boat Simulator.csproj", "{E7CC6441-32D5-4F20-A0D7-CE2CDF9CA6B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "14. Boat Simulator", "14. Boat Simulator\14. Boat Simulator.csproj", "{E7CC6441-32D5-4F20-A0D7-CE2CDF9CA6B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "15. Balanced Brackets", "15. Balanced Brackets\15. Balanced Brackets.csproj", "{970A6FF6-F4FF-4F6C-AD57-759796652C1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{E7CC6441-32D5-4F20-A0D7-CE2CDF9CA6B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7CC6441-32D5-4F20-A0D7-CE2CDF9CA6B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7CC6441-32D5-4F20-A0D7-CE2CDF9CA6B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{970A6FF6-F4FF-4F6C-AD57-759796652C1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{970A6FF6-F4FF-4F6C-AD57-759796652C1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{970A6FF6-F4FF-4F6C-AD57-759796652C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{970A6FF6-F4FF-4F6C-AD57-759796652C1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
