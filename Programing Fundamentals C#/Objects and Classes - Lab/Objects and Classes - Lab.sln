@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01. Day of Week", "01. Day of Week\01. Day of Week.csproj", "{1371269A-A0DA-4435-8C50-00D0744EC6D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02. Randomize Words", "02. Randomize Words\02. Randomize Words.csproj", "{BD3E366B-5145-4A9D-BE42-362BE79FE37A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03. Big Factorial", "03. Big Factorial\03. Big Factorial.csproj", "{8B1E3169-05FF-4686-A8AD-1F7429A8ED72}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1371269A-A0DA-4435-8C50-00D0744EC6D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1371269A-A0DA-4435-8C50-00D0744EC6D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1371269A-A0DA-4435-8C50-00D0744EC6D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1371269A-A0DA-4435-8C50-00D0744EC6D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD3E366B-5145-4A9D-BE42-362BE79FE37A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD3E366B-5145-4A9D-BE42-362BE79FE37A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD3E366B-5145-4A9D-BE42-362BE79FE37A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD3E366B-5145-4A9D-BE42-362BE79FE37A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B1E3169-05FF-4686-A8AD-1F7429A8ED72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B1E3169-05FF-4686-A8AD-1F7429A8ED72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B1E3169-05FF-4686-A8AD-1F7429A8ED72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B1E3169-05FF-4686-A8AD-1F7429A8ED72}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
