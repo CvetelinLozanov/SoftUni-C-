@@ -1,0 +1,12 @@
+﻿using System;
+
+namespace CustomTuple
+{
+    public class StartUp
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Hello World!");
+        }
+    }
+}
