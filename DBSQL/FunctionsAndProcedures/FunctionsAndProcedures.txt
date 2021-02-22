@@ -1,0 +1,173 @@
+--01
+CREATE OR ALTER PROC usp_GetEmployeesSalaryAbove35000 
+AS 
+SELECT FirstName
+		,LastName
+	FROM Employees
+WHERE Salary > 35000
+--02
+CREATE OR ALTER PROC usp_GetEmployeesSalaryAboveNumber @inputNumber DECIMAL(18, 4)
+AS
+SELECT FirstName
+		,LastName
+	FROM Employees
+WHERE Salary >= @inputNumber
+
+EXEC usp_GetEmployeesSalaryAboveNumber 30000
+--03
+CREATE PROC usp_GetTownsStartingWith @input VARCHAR(10)
+AS 
+SELECT [Name]
+	FROM Towns
+WHERE [Name] LIKE @input + '%'
+--04
+CREATE PROC usp_GetEmployeesFromTown @TownName VARCHAR(MAX)
+AS 
+SELECT e.FirstName
+		,e.LastName
+  FROM Employees AS e
+  JOIN Addresses AS a ON a.AddressID = e.AddressID
+  JOIN Towns AS t ON t.TownID = a.TownID
+WHERE t.[Name] = @TownName
+
+EXEC usp_GetEmployeesFromTown Sofia
+--05
+
+CREATE FUNCTION ufn_GetSalaryLevel(@Salary DECIMAL(18,4))
+RETURNS VARCHAR(10)
+AS
+BEGIN
+	DECLARE @result VARCHAR(10);
+
+	IF(@Salary < 30000)
+		SET @result = 'Low'
+	ELSE IF(@Salary <= 50000)
+		SET @result = 'Average'
+	ELSE 
+		SET @result = 'High'
+
+	RETURN @result
+END
+
+SELECT FirstName
+		,LastName
+		,Salary
+		,dbo.ufn_GetSalaryLevel(Salary)
+	FROM Employees	
+--06
+CREATE PROC usp_EmployeesBySalaryLevel @salaryLevel VARCHAR(10)
+AS
+SELECT FirstName
+		,LastName
+	FROM Employees
+WHERE @salaryLevel = dbo.ufn_GetSalaryLevel(Salary)
+
+EXEC usp_EmployeesBySalaryLevel 'Low'
+--07
+GO
+CREATE FUNCTION ufn_IsWordComprised(@setOfLetters VARCHAR(MAX), @word VARCHAR(MAX))
+RETURNS BIT
+BEGIN
+DECLARE @count INT = 1
+WHILE(@count <= LEN(@word))
+BEGIN
+	DECLARE @currentLetter CHAR(1) = SUBSTRING(@word, @count, 1)
+	DECLARE @charIndex INT =  CHARINDEX(@currentLetter, @setOfLetters)
+
+	IF (@charIndex = 0)
+	BEGIN
+		RETURN 0
+	END
+	SET @count += 1
+END
+RETURN 1
+END
+GO
+SELECT
+	dbo.ufn_IsWordComprised('oistmiahf', 'Halves')
+--08
+CREATE PROC usp_DeleteEmployeesFromDepartment (@departmentId INT)
+AS
+ALTER TABLE Departments
+ALTER COLUMN ManagerID INT 
+
+DELETE FROM EmployeesProjects
+WHERE EmployeeID IN (SELECT EmployeeID FROM Employees WHERE DepartmentID = @departmentId)
+
+UPDATE Departments
+SET ManagerID = NULL
+WHERE DepartmentID = @departmentId
+
+UPDATE Employees
+SET ManagerID = NULL
+WHERE ManagerID IN (SELECT EmployeeID FROM Employees WHERE DepartmentID = @departmentId)
+
+DELETE FROM Employees
+WHERE DepartmentID = @departmentId
+
+DELETE FROM Departments 
+WHERE DepartmentID = @departmentId
+
+SELECT COUNT(*)
+	FROM Employees
+WHERE DepartmentID = @departmentId
+
+EXEC usp_DeleteEmployeesFromDepartment 1
+--09
+USE Bank
+CREATE PROC usp_GetHoldersFullName
+AS 
+SELECT CONCAT(FirstName,' ', LastName) AS FullName
+	FROM AccountHolders
+EXEC usp_GetHoldersFullName
+--10
+CREATE PROC usp_GetHoldersWithBalanceHigherThan @InputNumber DECIMAL(18,4)
+AS
+SELECT k.FirstName,
+		k.LastName
+  FROM(
+SELECT ah.Id,
+		ah.FirstName,
+		ah.LastName
+  FROM AccountHolders AS ah
+  JOIN Accounts a ON a.AccountHolderId = ah.Id
+GROUP BY ah.Id, ah.FirstName, ah.LastName
+HAVING SUM(a.Balance) > @InputNumber) AS k
+ORDER BY k.FirstName, k.LastName
+--11
+CREATE FUNCTION ufn_CalculateFutureValue(@sum DECIMAL(18,4), @yearlyInterestRate FLOAT, @numberOfYears INT)
+RETURNS DECIMAL(18,4)
+BEGIN
+	RETURN @sum * POWER((1 + @yearlyInterestRate), @numberOfYears)
+END
+--12
+CREATE PROC usp_CalculateFutureValueForAccount @accountId INT, @InterestRate FLOAT
+AS
+SELECT a.Id,
+		ah.FirstName,
+		ah.LastName,
+		a.Balance,
+		dbo.ufn_CalculateFutureValue(a.Balance, @InterestRate, 5)
+	FROM Accounts AS a
+	JOIN AccountHolders AS ah ON ah.Id = a.AccountHolderId
+WHERE a.Id = @accountId
+
+EXEC usp_CalculateFutureValueForAccount 1 , 0.1
+--13
+USE Diablo
+
+CREATE FUNCTION ufn_CashInUsersGames(@gameName VARCHAR(MAX))
+RETURNS TABLE
+RETURN (SELECT SUM(k.Cash) AS TotalCash
+FROM(
+SELECT 
+	g.[Name],
+	ug.Cash,
+	ROW_NUMBER() OVER (ORDER BY ug.Cash DESC) AS RowNumber
+	FROM Games AS g
+JOIN UsersGames AS ug ON g.Id = ug.GameId
+WHERE g.[Name] = @gameName) AS k
+WHERE k.RowNumber % 2 = 1 )
+
+SELECT *
+  FROM dbo.ufn_CashInUsersGames ('Love is a mist')

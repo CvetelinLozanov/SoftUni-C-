@@ -1,0 +1,128 @@
+--01
+CREATE TABLE Persons(
+	Id INT PRIMARY KEY,
+	FirstName VARCHAR(20) NOT NULL,
+	Salary DECIMAL(18,2),
+	PassportId INT NOT NULL 
+)
+
+CREATE TABLE Passport(
+	Id INT PRIMARY KEY,
+	PassportNumber CHAR(10) NOT NULL
+)
+
+ALTER TABLE Persons
+ADD CONSTRAINT Fk_Persons_Passport FOREIGN KEY (PassportId) REFERENCES Passport(Id)
+
+ALTER TABLE Passport
+ADD UNIQUE (Id)
+
+ALTER TABLE Passport
+ADD UNIQUE (PassportNumber)
+
+INSERT INTO Persons(Id, FirstName, Salary, PassportId)
+VALUES (1, 'Roberto', 43300.00, 102),
+		(2,	'Tom', 56100.00, 103),
+		(3, 'Yana', 60200.00, 101)
+
+INSERT INTO Passport(Id, PassportNumber)
+VALUES (101, 'N34FG21B'),
+		(103, 'ZE657QP2'),
+		(102, 'K65LO4R7')
+
+--02
+CREATE TABLE Manufactures(
+	Id INT PRIMARY KEY IDENTITY NOT NULL,
+	Name VARCHAR(15) NOT NULL,
+	EstabilishedOn DATE NOT NULL
+)
+
+CREATE TABLE Models(
+	Id INT PRIMARY KEY IDENTITY(101,1),
+	Name VARCHAR(15),
+	ManufacturerId INT FOREIGN KEY REFERENCES Manufactures(Id)
+)
+
+INSERT INTO Manufactures(Name, EstabilishedOn)
+VALUES
+	('BMW', '07/03/1916'),
+	('Tesla', '01/01/2003'),
+	('Lada', '01/05/1966')
+
+INSERT INTO Models(Name, ManufacturerId)
+VALUES
+	('X1', 1),
+	('i6', 1),
+	('Model S', 2),
+	('Model X',	2),
+	('Model 3',	2),
+	('Nova', 3)
+
+--03
+CREATE TABLE Students(
+	Id INT,
+	Name VARCHAR(20)
+)
+
+CREATE TABLE Exams(
+	Id INT,
+	Name VARCHAR(20)
+)
+
+CREATE TABLE StudentsExams
+(
+	StudentId INT,
+	ExamId INT
+)
+
+ALTER TABLE StudentsExams
+ALTER COLUMN ExamId INT NOT NULL
+
+
+ALTER TABLE StudentsExams
+ADD CONSTRAINT PK_StudentsExams PRIMARY KEY(StudentId, ExamId)
+
+ALTER TABLE Students
+ALTER COLUMN Id INT NOT NULL
+
+ALTER TABLE Students
+ADD CONSTRAINT PK_Students PRIMARY KEY (Id)
+
+ALTER TABLE Exams
+ALTER COLUMN Id INT NOT NULL
+
+ALTER TABLE Exams
+ADD CONSTRAINT PK_Exams PRIMARY KEY (Id)
+
+ALTER TABLE StudentsExams
+	ADD	CONSTRAINT Fk_StudentsExams_Students FOREIGN KEY (StudentId) REFERENCES Students(Id),
+	CONSTRAINT Fk_StudentsExams_Exams FOREIGN KEY (ExamId) REFERENCES Exams(Id)
+
+--04
+CREATE TABLE Teachers
+(
+	TeacherId INT PRIMARY KEY IDENTITY(101,1),
+	[Name] VARCHAR(30),
+	ManagerId INT FOREIGN KEY REFERENCES Teachers(TeacherId)
+)
+
+INSERT INTO Teachers([Name], ManagerId)
+VALUES
+('John', NULL),
+('Maya', 106),
+('Silvia', 106),
+('Ted', 105),
+('Mark', 101),
+('Greta', 101)
+
+DROP TABLE Teachers
+
+TRUNCATE TABLE Teachers
+--05
+ 
+		
+
+
+
+
+

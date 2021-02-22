@@ -1,0 +1,133 @@
+--01
+SELECT COUNT(*) AS [Records Count] 
+FROM WizzardDeposits
+--02
+SELECT MAX(MagicWandSize) AS LongestMagicName
+FROM WizzardDeposits
+--03
+SELECT DepositGroup, MAX(MagicWandSize) AS LongestMagicWand
+FROM WizzardDeposits
+GROUP BY (DepositGroup)
+--04
+SELECT TOP(2) DepositGroup
+FROM WizzardDeposits
+GROUP BY(DepositGroup)
+ORDER BY AVG(MagicWandSize)
+--05
+SELECT DepositGroup, SUM(DepositAmount) AS [TotalSum]
+FROM WizzardDeposits
+GROUP BY(DepositGroup)
+--06
+SELECT DepositGroup, SUM(DepositAmount) AS [TotalSum]
+FROM WizzardDeposits
+WHERE (MagicWandCreator = 'Ollivander family')
+GROUP BY(DepositGroup)
+--07
+SELECT DepositGroup, SUM(DepositAmount) AS [TotalSum]
+FROM WizzardDeposits
+WHERE (MagicWandCreator = 'Ollivander family')
+GROUP BY(DepositGroup)
+HAVING SUM(DepositAmount) < 150000
+ORDER BY TotalSum DESC
+--08
+SELECT DepositGroup, MagicWandCreator, MIN(DepositCharge) AS [Min deposit charge]
+FROM WizzardDeposits
+GROUP BY DepositGroup, MagicWandCreator
+ORDER BY MagicWandCreator, DepositGroup
+--09
+SELECT AgeGroupTable.AgeGroup, COUNT(AgeGroupTable.AgeGroup) AS [Count]
+	FROM(
+SELECT
+	CASE
+	WHEN Age BETWEEN 0 AND 10 THEN'[0-10]'
+	WHEN Age BETWEEN 11 AND 20 THEN'[11-20]'
+	WHEN Age BETWEEN 21 AND 30 THEN'[21-30]'
+	WHEN Age BETWEEN 31 AND 40 THEN'[31-40]'
+	WHEN Age BETWEEN 41 AND 50 THEN'[41-50]'
+	WHEN Age BETWEEN 51 AND 60 THEN'[51-60]'
+	ELSE '[61+]'
+	END AS AgeGroup	
+FROM WizzardDeposits
+) AS AgeGroupTable
+GROUP BY(AgeGroupTable.AgeGroup) 
+--10
+SELECT LEFT(FirstName, 1)
+	FROM WizzardDeposits
+WHERE DepositGroup = 'Troll Chest'
+GROUP BY LEFT(FirstName, 1)
+--11
+SELECT DepositGroup, IsDepositExpired, FORMAT(AVG(DepositInterest), 'N2') AS [AverageInterest]
+	FROM WizzardDeposits
+WHERE YEAR(DepositStartDate) >= 1985
+GROUP BY DepositGroup, IsDepositExpired
+ORDER BY DepositGroup DESC,
+		IsDepositExpired ASC
+--12
+SELECT SUM(k.Diff) AS SumDifference
+	FROM (
+SELECT wd.DepositAmount - (SELECT w.DepositAmount 
+		FROM WizzardDeposits AS w
+	WHERE w.Id = wd.Id + 1) AS Diff
+FROM WizzardDeposits AS wd ) AS k
+
+SELECT SUM(k.SumDiff) AS SumDifference
+	FROM(
+SELECT DepositAmount - LEAD(DepositAmount,1) OVER (ORDER BY Id) AS SumDiff
+	FROM WizzardDeposits) AS k
+
+SELECT SUM(k.SumDiff) * -1 AS SumDifference
+	FROM(
+SELECT DepositAmount - LAG(DepositAmount,1) OVER (ORDER BY Id) AS SumDiff
+	FROM WizzardDeposits) AS k
+--13
+USE SoftUni
+
+SELECT DepartmentID, SUM(Salary)
+	FROM Employees
+GROUP BY (DepartmentID)
+--14
+SELECT DepartmentID, MIN(Salary)
+	FROM Employees
+WHERE DepartmentID IN (2, 5, 7) AND YEAR(HireDate) > 2000
+GROUP BY DepartmentID
+--15
+SELECT *
+	INTO NewEmployeeTable
+	FROM Employees
+WHERE Salary > 30000
+
+DELETE 
+FROM NewEmployeeTable
+WHERE ManagerID = 42
+
+UPDATE NewEmployeeTable
+SET Salary += 5000
+WHERE DepartmentID = 1
+
+SELECT DepartmentID, AVG(Salary) AS AverageSAlary
+	FROM NewEmployeeTable
+GROUP BY DepartmentID
+--16
+SELECT DepartmentID, MAX(Salary) AS MaxSalary
+	FROM Employees
+GROUP BY DepartmentID
+HAVING MAX(Salary) NOT BETWEEN 30000 AND 70000
+--17
+SELECT COUNT(*)
+	FROM Employees
+WHERE ManagerID IS NULL
+--18
+SELECT DISTINCT k.DepartmentID, k.Salary
+	FROM(
+SELECT DepartmentID, Salary,
+DENSE_RANK() OVER (PARTITION BY DepartmentId ORDER BY Salary DESC) AS SalaryRank
+	FROM Employees) AS k
+WHERE k.SalaryRank = 3
+--19
+SELECT TOP(10) FirstName, LastName, DepartmentID
+	FROM Employees AS e
+WHERE Salary > (SELECT AVG(Salary) FROM Employees AS en WHERE en.DepartmentID = e.DepartmentID)
+ORDER BY DepartmentID
+
+
+

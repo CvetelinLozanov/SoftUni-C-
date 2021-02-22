@@ -1,0 +1,207 @@
+--01
+SELECT TOP 5 e.EmployeeID, e.JobTitle, a.AddressID, a.AddressText
+FROM Employees AS e
+JOIN Addresses AS a ON e.AddressID = a.AddressID
+ORDER BY a.AddressID
+--02
+SELECT TOP 50 
+	e.FirstName,
+	e.LastName, 
+	t.[Name],
+	a.AddressText
+FROM Employees AS e
+JOIN Addresses AS a ON e.AddressID = a.AddressID
+JOIN Towns AS t ON a.TownID = t.TownID
+ORDER BY e.FirstName,
+			e.LastName
+--03
+SELECT
+	e.EmployeeID,
+	e.FirstName,
+	e.LastName,
+	d.[Name]
+FROM Employees AS e
+JOIN Departments AS d ON e.DepartmentID = d.DepartmentID
+WHERE d.[Name] IN('Sales')
+ORDER BY e.EmployeeID
+--04
+SELECT TOP 5
+	e.EmployeeID,
+	e.FirstName,
+	e.Salary,
+	d.[Name]
+FROM Employees AS e
+JOIN Departments AS d ON e.DepartmentID = d.DepartmentID 
+AND e.Salary > 15000
+ORDER BY d.DepartmentID
+--05
+SELECT TOP 3
+	e.EmployeeID
+	,e.FirstName
+FROM Employees AS e
+LEFT JOIN EmployeesProjects AS ep ON e.EmployeeID = ep.EmployeeID
+WHERE ep.ProjectID IS NULL
+--06
+SELECT 
+	e.FirstName,
+	e.LastName,
+	e.HireDate,
+	d.[Name] AS DeptName
+FROM Employees AS e 
+JOIN Departments AS d ON e.DepartmentID = d.DepartmentID
+WHERE e.HireDate > '1999-01-01' AND d.Name IN ('Sales', 'Finance')
+ORDER BY e.HireDate
+--07
+SELECT TOP 5 
+	e.EmployeeID,
+	e.FirstName,
+	p.[Name]
+FROM Employees AS e
+JOIN EmployeesProjects AS ep ON e.EmployeeID = ep.EmployeeID
+JOIN Projects AS p ON p.ProjectID = ep.ProjectID
+WHERE p.StartDate > '2002-08-13' AND p.EndDate IS NULL
+ORDER BY e.EmployeeID
+--08
+SELECT 
+	e.EmployeeID,
+	e.FirstName,
+ CASE
+ WHEN YEAR(p.StartDate) >= 2005 THEN NULL
+ ELSE p.[Name]
+ END AS projectName
+ FROM Employees AS e
+ JOIN EmployeesProjects AS ep ON ep.EmployeeID = e.EmployeeID
+ JOIN Projects AS p ON p.ProjectID = ep.ProjectID
+WHERE e.EmployeeID = 24
+
+SELECT 
+	e.EmployeeID,
+	e.FirstName,
+	IIF(YEAR(p.StartDate) >= 2005, NULL, p.[Name]) AS ProjectName
+ FROM Employees AS e 
+ JOIN EmployeesProjects AS ep ON ep.EmployeeID = e.EmployeeID
+ JOIN Projects AS p ON p.ProjectID = ep.ProjectID
+WHERE e.EmployeeID = 24
+--09
+SELECT 
+	e.EmployeeID,
+	e.FirstName,
+	e.ManagerID,
+	m.FirstName
+FROM Employees AS e
+JOIN Employees AS m ON m.EmployeeID = e.ManagerID
+WHERE e.ManagerID IN(3,7)
+ORDER BY e.EmployeeID
+--10
+SELECT TOP 50
+	e.EmployeeID,
+	e.FirstName + ' ' + e.LastName AS EmployeeName,
+	m.FirstName + ' ' + m. LastName AS ManagerName,
+	d.Name AS DepartmentName
+FROM Employees AS e
+LEFT JOIN Employees AS m ON m.EmployeeID =
+e.ManagerID
+LEFT JOIN Departments AS d ON d.DepartmentID =
+e.DepartmentID
+ORDER BY e.EmployeeID ASC
+--11
+SELECT MIN(avgSalary.AverageSalary)
+FROM(
+SELECT 
+ e.DepartmentId,
+ AVG(e.Salary) AS AverageSalary
+FROM Employees AS e
+GROUP BY(e.DepartmentID)
+) AS avgSalary
+--12
+USE Geography
+
+SELECT 
+	c.CountryCode,
+	m.MountainRange,
+	p.PeakName,
+	p.Elevation
+FROM Countries AS c
+ JOIN MountainsCountries AS mc ON mc.CountryCode = c.CountryCode
+ JOIN Mountains AS m ON mc.MountainId = m.Id
+ JOIN Peaks AS p ON p.MountainId = m.Id
+WHERE c.CountryCode = 'BG' AND p.Elevation > 2835 
+ORDER BY p.Elevation DESC
+--13
+SELECT 
+	c.CountryCode,
+	COUNT(m.MountainRange)
+FROM Countries AS c
+ JOIN MountainsCountries AS mc ON c.CountryCode = mc.CountryCode
+ JOIN Mountains AS m ON m.Id = mc.MountainId
+ GROUP BY c.CountryCode
+ HAVING c.CountryCode IN('BG', 'RU', 'US')
+ --14
+ SELECT TOP 5
+	c.CountryName,
+	r.RiverName
+ FROM Countries AS c
+  LEFT JOIN CountriesRivers AS cr ON c.CountryCode = cr.CountryCode 
+  LEFT JOIN Rivers AS r ON r.Id = cr.RiverId
+ WHERE c.ContinentCode = 'AF'
+ORDER BY c.CountryName
+--15
+SELECT 
+	MostUsedCurrency.ContinentCode,
+	MostUsedCurrency.CurrencyCode,
+	MostUsedCurrency.CurrencyUsage
+FROM(
+  SELECT 
+	c.ContinentCode,
+	c.CurrencyCode,
+	COUNT(c.CurrencyCode) AS CurrencyUsage,
+	DENSE_RANK() OVER (PARTITION BY c.ContinentCode ORDER BY COUNT(c.CurrencyCode) DESC) 
+	AS CurrencyRank
+  FROM Countries AS c
+GROUP BY c.ContinentCode, 
+			c.CurrencyCode
+ HAVING COUNT(c.CurrencyCode) > 1
+) AS MostUsedCurrency
+WHERE MostUsedCurrency.CurrencyRank = 1
+ORDER BY MostUsedCurrency.ContinentCode, MostUsedCurrency.CurrencyUsage
+--16
+SELECT 
+	mc.CountryCode
+FROM MountainsCountries AS mc
+WHERE mc.MountainId IS NULL
+--17
+SELECT TOP 5
+	c.CountryName,
+	MAX(p.Elevation) AS LongestPeakElevation,
+	MAX(r.[Length]) AS LongestRiver
+FROM Countries AS c
+ LEFT JOIN MountainsCountries AS mc ON mc.CountryCode = c.CountryCode
+ LEFT JOIN Mountains AS m ON m.Id = mc.MountainId
+ LEFT JOIN Peaks AS p ON p.MountainId = m.Id
+ LEFT JOIN CountriesRivers AS cr ON cr.CountryCode = c.CountryCode
+ LEFT JOIN Rivers AS r ON cr.RiverId = r.Id
+ GROUP BY c.CountryName
+ ORDER BY LongestPeakElevation DESC,
+			LongestRiver DESC,
+			c.CountryName
+--18
+SELECT TOP(5) k.CountryName,
+	   ISNULL(k.PeakName, '(no highest peak)'),
+	   ISNULL(k.MaxElevation,0),
+	   ISNULL(k.MountainRange, '(no mountain)')
+FROM(
+		SELECT 
+			c.CountryName,
+			MAX(p.Elevation) AS MaxElevation,
+			p.PeakName,
+			m.MountainRange,
+			DENSE_RANK() OVER (PARTITION BY c.CountryName ORDER BY MAX(p.Elevation) DESC)
+			AS ElevationRank
+		FROM Countries AS c
+	LEFT JOIN MountainsCountries AS mc ON mc.CountryCode = c.CountryCode
+	LEFT JOIN Mountains AS m ON m.Id = mc.MountainId
+	LEFT JOIN Peaks AS p ON p.MountainId = m.Id
+GROUP BY c.CountryName, p.PeakName, m.MountainRange
+) AS k
+WHERE k.ElevationRank = 1
+ORDER BY k.CountryName, k.PeakName
